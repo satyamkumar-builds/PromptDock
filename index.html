@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=`, initial-scale=1.0">
+  <title>PromptDock</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header id="top-bar">
+    <div class="logo">Prompt<span>Dock</span></div>
+    <input id="search-input" type="search" placeholder="search prompts and tags.." aria-label="search prompts and tags">
+    <div class="top-actions">
+      <button type="button" id="import-btn" class="top-action-btn">Import JSON</button>
+      <button type="button" id="export-btn" class="top-action-btn">Export JSON</button>
+      <button type="button" id="prompt-btn" class="top-action-btn">+New Prompt</button>
+      <button type="buuton" id="theme-button" aria-label="Toogle dark button" class="top-action-btn">Dark</button>
+      <input type="file" id="import-file" accept="application/json,.json" hidden>
+
+    </div>
+  </header>
+
+  <div class="page-layout">
+    <aside id="sidebar">
+      <nav aria-label="prompt views">
+        <button type="button" class="nav-item" data-view="all">
+          <span>All prompts</span>
+          <span id="all-count">0</span>
+        </button>
+
+        <button type="button" class="nav-item" data-view="favorites">
+          <span>favorites</span>
+          <span id="favorite-count">0</span>
+        </button>
+      </nav>
+
+
+      <div class="sidebar-block">
+        <h2>Tags</h2>
+        <div id="tag-list"></div>
+      </div>
+
+      <div>
+        <h2>WORKBENCH</h2>
+        <button type="button" class="nav-item" data-view="editor">
+          <span>Editor + Cost</span>
+        </button>
+      </div>
+
+      </aside>
+
+          <main id="app">
+      <section id="library-view">
+        <div class="section-heading">
+          <div>
+            <h1>All prompts <span id="library-count">(0)</span></h1>
+            <p>Keep your useful prompts in one simple place.</p>
+          </div>
+
+          <label class="sort-label" for="sort-select">
+            Sort
+            <select id="sort-select">
+              <option value="newest">Newest</option>
+              <option value="tokens">Most tokens</option>
+            </select>
+          </label>
+        </div>
+
+        <div id="prompt-grid"></div>
+      </section>
+
+      <section id="editor-view" hidden>
+        <div class="editor-main">
+          <form id="prompt-form">
+            <div class="form-heading">
+              <div>
+                <h1 id="editor-title">New prompt</h1>
+                <p>Write a reusable prompt with {{variables}}.</p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="title-input">Title</label>
+              <input id="title-input" type="text" placeholder="Explain code to a beginner">
+            </div>
+
+            <div class="form-group">
+              <label for="tags-input">Tags</label>
+              <input id="tags-input" type="text" placeholder="coding, teaching">
+            </div>
+
+            <div class="form-group">
+              <label for="template-input">Prompt template</label>
+              <textarea id="template-input" placeholder="Use double curly braces for variables, for example {{role}}."></textarea>
+            </div>
+
+            <div class="stats">
+              <div>
+                <span id="characters-stat">0</span>
+                <small>characters</small>
+              </div>
+              <div>
+                <span id="words-stat">0</span>
+                <small>words</small>
+              </div>
+              <div>
+                <span id="tokens-stat">0</span>
+                <small>est. tokens</small>
+              </div>
+              <div>
+                <span id="variables-stat">0</span>
+                <small>variables</small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <h2 class="small-heading">Fill variables</h2>
+              <div id="variable-fields"></div>
+            </div>
+          </form>
+
+          <section id="preview" class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Live preview</h2>
+                <p>Your filled prompt will appear here.</p>
+              </div>
+              <button type="button" id="copy-filled-btn">Copy filled prompt</button>
+            </div>
+
+            <pre id="preview-text">Nothing to preview yet.</pre>
+
+            <div class="preview-actions">
+              <button type="button" id="save-btn" class="primary">Save</button>
+              <button type="button" id="cancel-btn">Cancel</button>
+            </div>
+          </section>
+        </div>
+
+        <aside id="cost-panel" class="panel">
+          <h2>Cost estimator</h2>
+          <label for="output-tokens">Expected output tokens</label>
+          <div class="range-row">
+            <input id="output-tokens" type="range" min="100" max="3000" step="100" value="500">
+            <strong id="output-tokens-value">500</strong>
+          </div>
+
+          <table id="cost-table">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Input price</th>
+                <th>Output price</th>
+                <th>Per run</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <p class="help-text">Prices are sample values. You can edit them.</p>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" aria-live="polite"></div>
+
+  <script src="script.js" defer></script>
+
+
+  
+
+  
+</body>
+</html>
